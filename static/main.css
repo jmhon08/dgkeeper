@@ -1,0 +1,464 @@
+
+
+*{
+margin: 0;   
+}
+html{
+margin:0;
+padding:0;
+height:100%;
+}
+ 
+body{
+background-image: -webkit-gradient(linear, left top, left bottom, 
+                     from(#2F4F4F), to(#2B4545));
+background-repeat:repeat-x;
+background-color:#2B4545;
+font-family: Helvetica;
+color:black;
+margin:0;
+padding:0;
+height:100%;
+}
+
+pre{
+font-family: Helvetica;
+}
+.underHeader{
+padding:10px;
+}
+.header{
+padding:8px 7px 5px;
+font-size:25px;
+border-bottom:black solid 2px;
+position:fixed;
+height:33px;
+top:0px;
+left:0px;
+z-index:17;
+width:100%;
+text-shadow: 0px 1px 0px #fff;
+background-color:silver;
+background-image: -webkit-gradient(linear, left top, left bottom, 
+                                       from(#ccc), to(#999));
+									  
+}
+
+.footer{
+position:fixed;
+bottom:0px;
+left:0px;
+background-color: silver;
+padding:0px 5px 5px;
+font-size:14px;
+border-top:black solid 2px;
+width:100%;
+height: 35px;
+text-shadow: 0px 1px 0px #fff;
+background-image: -webkit-gradient(linear, left top, left bottom, 
+                                       from(#ccc), to(#999));                             
+}
+
+.menuButton {
+position:absolute;
+right:20px;
+top:10px;
+width:40px;
+font-weight: bold;
+font-size:16px;
+text-align: center;
+color: white;
+text-shadow: rgba(0,0,0,0.6) 0px -1px 0px;
+line-height: 28px;
+border-width: 0 8px 0 8px;
+-webkit-border-image: url(images/button.png) 0 8 0 8;
+-moz-border-image: url(images/button.png) 0 8 0 8;
+display:none;
+opacity:0.8;
+}
+.backButtonFromAddPlayer{
+margin-right:5px;
+padding-left:5px;
+position:absolute;
+right:20px;
+top:10px;
+width:40px;
+font-weight: bold;
+font-size:16px;
+text-align: center;
+color: white;
+text-shadow: rgba(0,0,0,0.6) 0px -1px 0px;
+line-height: 28px;
+border-width: 0 8px 0 8px;
+display:none;
+opacity:0.8;
+-webkit-border-image: url(images/back_button.png) 0 8 0 8;
+-moz-border-image: url(images/back_button.png) 0 8 0 8;
+}
+
+.menu{
+margin-left:350px;
+position:absolute;
+width:100%;
+top:50px;
+display:none;
+z-index:12;
+-webkit-transition-property: opacity, margin-left;
+-webkit-transition-duration: 0.5s, 0.5s;
+-moz-transition-property: opacity, margin-left;
+-moz-transition-duration: 0.5s, 0.5s;
+-o-transition-property: opacity, margin-left;
+-o-transition-duration: 0.5s, 0.5s;
+}
+
+#coursePage{
+margin-left:0px;
+position:absolute;
+z-index:10;
+top:10px;
+display:none;
+margin-top:35px;
+-webkit-transition-property: opacity, margin-left;
+-webkit-transition-duration: 0.5s, 0.5s;
+-moz-transition-property: opacity, margin-left;
+-moz-transition-duration: 0.5s, 0.5s;
+-o-transition-property: opacity, margin-left;
+-o-transition-duration: 0.5s, 0.5s;
+}
+
+.arrow {
+height:45px;
+width:39px;
+margin:0 auto;
+}
+.uparrow {
+background:url(images/upArrow.png) no-repeat;
+margin-top:3px;
+}
+.downarrow {
+background:url(images/downArrow.png) no-repeat;
+}
+.scorebox {
+margin:2px;
+background:#cbe6cc;
+width:37px;
+height:35px;
+border:black;
+font-size:29px;
+text-align:center;
+opacity:0.5;
+filter:alpha(opacity=50);
+margin:0 auto;
+margin-bottom:3px;
+padding-top:3px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+}
+.scoreBoxTotal{
+margin:2px;
+background:#cbe6cc;
+width:37px;
+height:35px;
+border:black;
+font-size:29px;
+text-align:center;
+margin:14px 13px 14px;
+padding-top:5px;
+float:left;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+}
+.arrowset {
+float:left;
+padding:10px 9px 0px;
+width:45px;
+}
+.scoreTotals{
+background-color:red;
+height:100px;
+width:100px;
+}
+.clear {
+clear:both;
+}
+.skipHoleButtons{
+float:left;
+clear:both;
+}
+
+.nextHole {
+background:url(images/nextHole.png) no-repeat;
+height:45px;
+width:110px;
+display:inline-block;
+}
+.previousHole{
+background:url(images/previousHole.png) no-repeat;
+height:45px;
+width:135px;
+display:inline-block;
+}
+#lastHole{
+background:url(images/lastHole.png) no-repeat;
+height:45px;
+width:135px;
+display:none;
+}
+
+#arrowSetAllPlayers{
+display:none;
+}
+
+.float
+{
+float:left;
+}
+#plusButton{
+background:url(images/plusButton.png) no-repeat;
+height:40px;
+width:40px;
+float:left;
+padding-left:5px;
+position:relative;
+z-index:16;
+}
+#holeNumber{
+font-family: Helvetica; 
+color:white;
+font-size:20pt;
+font-weight:bolder;
+text-shadow: 0px 2px 2px #1F1F1F;
+margin-top:8px;
+}
+#addPlayers{
+padding-top:5px;
+width:200px;
+}
+.player {
+width:100px;
+}
+
+#playerPage{
+padding-top:45px;
+padding-bottom:50px;
+clear:both;
+float:left;
+width:300px;
+position:relative;
+opacity:1;
+color:white;
+-webkit-transition: opacity 0.5s;
+-moz-transition: opacity 0.5s;
+-o-transition: opacity 0.5s;
+}
+.disappear{
+opacity:0;
+}
+.appear{
+opacity:1;
+}
+.screenToLeft{
+margin-left: 0px;
+}
+.screenToRight{
+margin-left: 100%;
+}
+.box{
+width:20px;
+}
+.playerTextBoxes{
+width:200px;
+clear:both;
+}
+.playerHeading{
+font-family: Helvetica;
+font-size:20pt;
+font-weight:bolder;
+font-weight:bolder;
+color:white;
+text-shadow: 0px 2px 2px #1F1F1F;
+}
+.currentPlayer{
+font-family: Helvetica; 
+color:white;
+font-size:10pt;
+text-align:center;
+width:57px;
+overflow:hidden;
+white-space:nowrap;
+font-weight:bolder;
+margin-left:-7px;
+}
+.previousPlayer {
+width:90px;
+padding-left:10px;
+color:black;
+font-size:15px;
+
+}
+.previousPlayers {
+border: solid black 2px;
+background-color:#D5DBDB;
+width:100px;
+padding:7px;
+margin-top:15px;
+margin-bottom: 15px;
+color:black;
+float:right;
+font-size:12px;
+position:absolute;
+top:40px;
+left:185px;
+height:105px;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+}
+.previousPlayers b{
+text-decoration:underline;
+}
+.holder{
+background-color: #D4DADA;
+border: 1px solid #999999;
+color: #222222;
+display: block;
+font-size: 17px;
+font-weight: bold;
+margin-bottom: -1px;
+padding: 12px 10px;
+text-decoration: none;
+text-align:center;
+margin-left:20px;
+margin-right:20px;
+}
+.newGame{
+-webkit-border-top-left-radius: 8px;
+-webkit-border-top-right-radius: 8px;
+-moz-border-radius-topleft: 8px;
+-moz-border-radius-topright: 8px;
+border-top-left-radius: 8px;
+border-top-right-radius: 8px;
+}
+.howToHolder{
+-webkit-border-bottom-left-radius: 8px;
+-webkit-border-bottom-right-radius: 8px;
+-moz-border-radius-bottomleft: 8px;
+-moz-border-radius-bottomright: 8px;
+border-bottom-left-radius: 8px;
+border-bottom-right-radius: 8px;
+}
+.email{
+display:none;
+font-size:12px;
+}
+.addPlayerInGame{
+display:none;
+font-size:12px;
+}
+.howTo{
+display:none;
+font-size:12px;
+}
+.seeOldScores{
+border:black solid 2px;
+width:120px;
+margin:8px 0px 5px;
+padding:2px;
+text-align:center;
+float:left;
+}
+.seeOldScores:active  {
+background-color:gray;
+}
+.submitButton{
+border:black solid 2px;
+width:120px;
+margin:8px 12px 5px;
+padding:2px;
+text-align:center;
+float:right;
+}
+.submitButton:active {
+background-color:gray;
+}
+#oldScoresPage{
+display:none;
+padding:3px;
+margin-top:35px;
+margin-left: 10px;
+color:white;
+font-size:18px;
+}
+.dates{
+font-size:16px;
+}
+.row{
+margin-left:20px;
+}
+.col1{
+text-align:right;
+}
+.oldScoresYear{
+text-align:center;
+font-weight: bold;
+}
+table{
+border-collapse:collapse;
+border:solid black 2px;
+color:white;
+font-size:16px;
+margin-bottom:30px;
+white-space:nowrap;
+word-wrap: break-word;
+table-layout:fixed;
+}
+.oldScoreDay{
+text-align:center;
+}
+.scoreRow{
+text-align:left;
+font-size:16px;
+}
+.cell{
+width:45px;
+height:18px;
+float:left;
+margin:2px;
+padding-left:8px;
+overflow:hidden;
+}
+.oldScoreHolder{
+display:none;
+width:100%;
+}
+#saveOldScoresOption{
+margin:4px;
+margin-bottom:7px;
+}
+.yesButton{
+margin-top:10px;
+margin-right:50px;
+}
+
+.noButton{
+margin-top:10px;
+margin-left:50px;
+}
+
+.askNewGame{
+display:none;
+font-size:12px;
+margin: 0 auto;
+}
+
+.joyce{
+font-size:13px;
+margin-left:20px;
+margin-top:15px;
+}
+.joyce  >  a {
+color:#999;
+}
+

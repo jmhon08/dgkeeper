@@ -1,0 +1,998 @@
+<!DOCTYPE html PUBLIC"-// WAPFORUM//DTD XHTML Mobile 1.2//EN"" http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd"  manifest="dgkeeper.manifest"> 
+<html>
+  <head> 
+    <meta name="apple-mobile-web-app-capable" content="yes"/> 
+    <meta name="viewport" content="width=320px; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <script type="text/javascript" src='jquery.js'></script> 
+    <script type="text/javascript" src="json2.js"></script> 
+    <link type="text/css" rel="stylesheet" href="static/main.css"/> 
+    <script type="text/javascript" src="fixed.js"></script> 
+    <script type="text/javascript" src="iscroll.js"></script>
+    <link rel="apple-touch-icon" href="images/iphone-icon.png"/>
+  </head> 
+
+
+  <body> 
+    <div class="header">TESTJEIJRAIEW
+      <div class="menuButton">Menu
+      </div>
+      <div class="backButtonFromAddPlayer">Back
+      </div>
+    </div> 
+    <div class="underHeader"> 
+
+	        <div id="playerPage"> 
+	          <div id="plusButton">
+	          </div> 
+	          <div class="playerHeading">Players
+	          </div> 
+	          <div class="previousPlayers">
+	            <b>Previous Players
+	            </b>
+	          </div> 
+	          <div class="playerTextBoxes"> 
+	            <form id="addPlayers" onsubmit="submitGame(); return false;">
+			        Name <input class='player' type='text' name='player'><br/>
+			        Name <input class='player' type='text' name='player'><br/>
+			        Name <input class='player' type='text' name='player'><br/>
+			        Name <input class='player' type='text' name='player'><br/>
+			        <input type="submit" value="Go" style="visibility:hidden" />
+	            </form> 
+	          </div> 
+	      	  <label for='defaulter'>Default scores to 3  </label> <input type="checkbox" name="defaulter" id="defaulter" value="yes" CHECKED/>
+	      	</div>
+	     
+		    <div id="coursePage"> 
+		        <div id='holeNumber'>
+		        </div> 
+		        <div id='bigarrowholder' class="clear"><div class='clear' id='arrowSetAllPlayers'></div>
+		        </div> 
+		        <div id='scoreTotals' class="clear">
+		        </div> 
+		        <div class="skipHoleButtons">
+		        </div> 
+		    </div>
+    </div>
+
+    <div class="menu"> 
+      <div class="holder newGame">
+        <b>New Game
+        </b>
+        <div class="askNewGame">Are you sure you'd like to clear the current scores and start a new game?
+          <br/>
+          <button class="yesButton" type="button">Yes
+          </button>
+          <button class="noButton" type="button">No
+          </button>
+        </div>
+      </div>
+
+      <div class="holder emailHolder">
+        <b>Email scores
+        </b> 
+
+        <div class="email">
+          <form class="submitEmail">
+            Email 
+            <input class="emailAddress" type="text"/>
+            <div>
+              <input type="submit" value="Send" onsubmit='emailScore();' />
+            </div>
+          </form>
+
+        </div> 
+      </div> 
+
+      <div class="holder addPlayerHolder">
+        <b>Add Player In Game
+        </b> 
+        <div class="addPlayerInGame">
+          <form class="addPlayerSubmitButton">
+            Name 
+            <input class='playerInGame' type='text' name='player'/> 
+            <div>
+              <input type="submit" value="Add" style="margin-top:5px;" onsubmit='addPlayerInGameFunction()' />
+            </div>
+          </form>
+        </div> 
+      </div>
+      <div class="holder howToHolder">
+        <b>How To Use
+        </b> 
+        <div class="howTo">
+          <i>1. Click up/down arrows to set your score.
+            <br/>2. If you've defaulted the score to 3 and threw a 3, then click the score box.
+            <br/>3. Load this site once on your device and you can use it offline!
+          </i>
+        </div> 
+      </div> 
+
+      <div class="joyce">
+        <a href="http://joycemhon.appspot.com">See my other projects!
+        </a>
+      </div>
+    </div> 
+    
+    <div class="footer"> 
+      <div class="submitButton">PLAY!
+      </div> 
+    </div> 
+
+ 
+ 
+<script type = "text/javascript">
+
+//Swap cache when manifest changes
+if (!window.applicationCache) {
+    var appCache = window.applicationCache;
+    try {
+        appCache.update();
+        // Attempt to update the user's cache
+    }
+    catch(err) {}
+    if (appCache.status == window.applicationCache.UPDATEREADY) {
+        appCache.swapCache();
+        // The fetch was successful, swap in the new cache.
+    }
+}
+
+//Set iscroll function so player page footer stays at the bottom
+// if (navigator.userAgent.match(/iPhone/i)) {
+//     var myScroll2;
+
+//     function setHeight2() {
+//         var footerH = $(".footer")[0].offsetHeight;
+//         var wrapperH = window.innerHeight - footerH;
+//         $("#wrapper2").css("height", wrapperH);
+//         if (myScroll2 instanceof iScroll) {
+//             myScroll2.refresh();
+//         }
+//     }
+
+//     function loaded2() {
+//         setHeight2();
+//         myScroll2 = new iScroll('playerPage');
+//     }
+
+//     window.addEventListener('resize', setHeight2, false);
+//     //document.addEventListener('touchmove', function(e){ e.preventDefault(); }, true);
+//     $("#playerPage").bind("touchmove",
+//     function(e) {
+//         e.preventDefault();
+//     },
+//     true);
+//     document.addEventListener('DOMContentLoaded', loaded2, false);
+// }
+
+//If iphone, then use mousestart for jquery trigger events
+if (navigator.userAgent.match(/iPhone/i)) {
+    var clickType = "touchstart";
+    var clickType2 = "touchend";
+    var clickType3 = "touchmove";
+}
+//If not iphone, then use click for jquery trigger events
+ else {
+    var clickType = "click";
+    var clickType2 = "click";
+}
+
+//Array sum function
+Array.prototype.sum = function() {
+  sum=0;
+  for (var i=0; i<this.length; i++) {
+    if (this[i] != undefined) {
+      sum+= this[i];
+    }
+  }
+  return sum;
+};
+
+
+//Cookies functions
+function getFunction(cookie_name) {
+    var results = document.cookie.match('(^|;) ?' + cookie_name + '=([^;]*)(;|$)');
+    if (results) return (JSON.parse(unescape(results[2])));
+    else return null;
+}
+
+function setFunction(name, value, exp_y, exp_m, exp_d, path, domain, secure) {
+    value = JSON.stringify(value);
+    var cookie_string = name + "=" + escape(value);
+    if (exp_y) {
+        var expires = new Date(exp_y, exp_m, exp_d);
+        cookie_string += "; expires=" + expires.toGMTString();
+    }
+
+    if (path) cookie_string += "; path=" + escape(path);
+    if (domain) cookie_string += "; domain=" + escape(domain);
+    if (secure) cookie_string += "; secure";
+    document.cookie = cookie_string;
+}
+
+function deleteFunction(cookie_name) {
+    var cookie_date = new Date();
+    // current date & time
+    cookie_date.setTime(cookie_date.getTime() - 1);
+    document.cookie = cookie_name += "=; expires=" + cookie_date.toGMTString();
+}
+
+
+//Function to sort array numerically
+function sortDesc(a, b) {
+    return (b[1] - a[1])
+}
+
+//Function to sort array numerically
+function sortByFirst(a, b) {
+    if (a[0]<b[0]) return -1;
+    if (a[0]==b[0]) return 0;
+    if (a[0]>b[0]) return 1;
+}
+
+
+var online = navigator.onLine;
+var roomURL = location.pathname;
+var currentHole = 1;
+
+//Variables for showing previous players
+var playerDictionary = getFunction("playerDictionary");
+// var state = '{{state}}';
+// if (online) {
+//     if (state) {
+//         var saveStateObj = JSON.parse(state);
+//     }
+//     else {
+//         var saveStateObj = null
+//     }
+// }
+//  else {
+    var saveStateObj = getFunction("saveStateObj");
+    //if new room (this url is diff from the one in the cookie), then delete the cookie
+    if (saveStateObj && saveStateObj.url != roomURL) {
+        deleteFunction("saveStateObj");
+        window.location.reload();
+    }
+// }
+
+var playerNameArray = [];
+var defaultScore = 0;
+var previousPage;
+var coursePageWidth;
+var lastEmailAddress = getFunction("lastEmailAddress");
+var createHole;
+var arrowsetWidth;
+var playerArrayMostPlayed = [];
+var topPlayersArray = [];
+var submitGame;
+var lastUpdateTime = {% if lastUpdateTime %}'{{lastUpdateTime}}'{% else %}0{%endif%};
+var timerCount = 0;
+
+//Save state to server when clicking next hole to a new hole, making a new game, and adding a user
+function saveStateToServer(type) {
+    timerCount = 0;
+    var currentTime = new Date();
+    lastUpdateTime = currentTime.getTime();
+    serverStateObj = {
+        state: JSON.stringify(saveStateObj),
+        url: roomURL,
+        timestamp: lastUpdateTime,
+        type: type,
+    }
+    $.post('/store', serverStateObj);
+}
+
+//Adjust score in the server when you press up, down, or set the score
+function adjustStateInServer(playerIndex, hole, score) {
+    var currentTime = new Date();
+    lastUpdateTime = currentTime.getTime();
+    serverStateObj = {
+        updateIndex: playerIndex,
+        updateHole: hole,
+        updateScore: score,
+        url: roomURL,
+        timestamp: lastUpdateTime,
+    }
+    $.post('/adjust', serverStateObj, function(data) {
+      if (data) { console.log(data) }
+    });
+}
+
+function syncStateWithServer() {
+    //'Order' the saveStateObj so comparison is always the same
+    saveStateArray = [];
+    for (key in saveStateObj) {
+        if (!saveStateObj.hasOwnProperty(key)) continue;
+        saveStateArray.push([key,saveStateObj[key]]);
+    }
+    var orderedStateAsString = JSON.stringify(saveStateArray.sort(sortByFirst))
+    
+    //Send 'ordered' saveStateObj as a string to server
+    serverStateObj = {
+        stateMD5: MD5(orderedStateAsString.replace(/[^\w]/g,'')),
+        timestamp: lastUpdateTime,
+        url: roomURL,
+    }
+    $.post('/sync', serverStateObj,
+    function(data) {
+        //Set saveStateObj as the new one and refresh the page if data returned
+        if (data) {
+            console.log(saveStateObj);
+            saveStateObj = JSON.parse(data);
+            
+            //If new player added, just refresh page for now
+            if (saveStateObj.playerNameArray.length != playerNameArray.length) {
+                window.location.reload();
+            }
+            
+            //Show current hole based on retrieved state (may or may not see a change if the difference between your current state and the server was on a different hole
+            setFunction("saveStateObj", saveStateObj);
+            displayHoleState(currentHole, saveStateObj);
+            console.log('loaded state from server');
+        }
+    });
+}
+
+//Trigger client to compare state obj to the one stored in the server
+function syncTimer() {
+    timerCount++;
+    if (timerCount < 5) {
+      setTimeout(syncTimer, 4000);
+    }
+    else {
+      syncStateWithServer();
+      timerCount = 0;
+      setTimeout(syncTimer, 4000);
+    }
+}
+
+
+//Initialize the saved state object when you start a new game
+function initializeSaveStateObj(playerNameArray) {
+    saveStateObj = {};
+    saveStateObj.url = roomURL;
+    saveStateObj.defaultScore = defaultScore;
+    saveStateObj.playerNameArray = playerNameArray;
+    playerNameArrayLength = playerNameArray.length;
+    //Need this to maintain order of players
+    //Setup each player to have a scores array that has just one undefined value
+    for (var i = 0; i < playerNameArrayLength; i++) {
+        saveStateObj[i] = {
+            scores: [undefined],
+        }
+    }
+
+    //Set saveStateObj local storage var, convert from object to string
+    setFunction("saveStateObj", saveStateObj);
+    return saveStateObj;
+}
+
+//THE BIG MAMA FUNCTION TO MAKE THE COURSE PAGE WORK AND SHOW. ONLY LOADED ONCE
+//Load the course page with the saved state object.
+function playDG() {
+
+    //Show course page, skip hole buttons, and hide player page
+    $("#playerPage").addClass("disappear");
+    $(".skipHoleButtons").append("<div class='previousHole'></div><div class='nextHole'><div id='lastHole'></div>");
+    setTimeout(function() {
+        $("#playerPage").hide();
+    },
+    500);
+    $("#coursePage").show();
+    setTimeout(function() {
+        $("#wrapper2").hide();
+    });
+    $(".footer").hide();
+
+    //Show menu button
+    $(".menuButton").show();
+    if (navigator.userAgent.match(/iPhone/i)) {
+        $(".menuButton").css("left", "258px");
+    }
+
+    //Grab variables from state obj
+    defaultScore = saveStateObj.defaultScore;
+    playerNameArray = saveStateObj.playerNameArray;
+    playerNameArrayLength = playerNameArray.length;
+
+    //Default current hole to num of holes
+    currentHole = saveStateObj[0].scores.length;
+    $("#arrowSetAllPlayers").css("display", "block");
+
+    //Create each player's score box, totals score box, and get arrowset width for future screen width setting
+    for (var i = 0; i < playerNameArrayLength; i++) {
+        $("#arrowSetAllPlayers").append("<div class='arrowset'><div class='currentPlayer'>" + playerNameArray[i] + "</div><div class='arrow uparrow'></div><div class='scorebox'>" + defaultScore + "</div><div class='arrow downarrow'></div></div>");
+        $("#scoreTotals").append("<div class='scoreBoxTotalHolder'><div class='scoreBoxTotal'>0</div></div>");
+
+    }
+    arrowsetWidth = parseInt($(".arrowset").attr("clientWidth"));
+
+    //Set width of course page screen so arrow sets stay in one row
+    if (playerNameArrayLength > 4) {
+        var coursePageWidth = playerNameArrayLength * arrowsetWidth;
+        $("#coursePage").css("width", coursePageWidth);
+        //If iPhone, change header width to match course page width
+        if (navigator.userAgent.match(/iPhone/i)) {
+            $(".header").css("width", coursePageWidth);
+        }
+    }
+    
+    displayHoleState(currentHole, saveStateObj);
+
+    //Set event for incrementing/decrementing score when up arrow clicked
+    $(".uparrow").live(clickType,
+    function() {
+        adjustScore(1, $(this).parent().index())
+    });
+    
+    $(".downarrow").live(clickType,
+    function() {
+        adjustScore( - 1, $(this).parent().index())
+    });
+    $(".scorebox").live(clickType,
+    function() {
+        //Only adjust score if user is trying to set score as the default and the score has never been set before
+        if ($(this).css("opacity") == 0.5) {
+            adjustScore(0, $(this).parent().index());
+        };
+    });
+
+    function adjustScore(adjustment, colNo) {
+        var oldScore = saveStateObj[colNo].scores[currentHole - 1];
+        var newScore;
+        
+        //If this is the first time setting the score, add adjustment to default score
+        if (oldScore == undefined) {
+          newScore = defaultScore + adjustment;
+        }
+        //else add the adjustment to the stored score
+        else {
+          newScore = saveStateObj[colNo].scores[currentHole - 1] + adjustment;
+        }
+        
+
+        //Increment player's score if new score is > 0
+        if (newScore < 0) {
+            return false;
+        }
+        else {
+            saveStateObj[colNo].scores[currentHole - 1] = newScore;
+            newTotal = saveStateObj[colNo].scores.sum();
+
+            //Set saveStateObj local storage var, convert from object to string and then update ui
+            setFunction("saveStateObj", saveStateObj);
+            displayHoleState(currentHole, saveStateObj);
+            
+            //Show totals update on UI
+            $($(".scoreBoxTotal")[colNo]).html(newTotal);
+            if (newTotal > 99) {
+                //Shrink font if over 3 digits
+                $($(".scoreBoxTotal")[colNo]).css({
+                    "font-size": "20px",
+                    "padding-top": "8px",
+                    "height": "32px"
+                });
+            }
+
+            //Update server and users real time with pubnub
+            // if (online) {
+            //     adjustStateInServer(colNo, currentHole, newScore);
+            // }
+
+            return false;
+        }
+    };
+
+    //Set events for skipping holes when clicking Next Hole
+    $(".nextHole").bind(clickType,
+    function() {
+        currentHole++;
+        //update players' scores with undefined if they don't have anything for that hole yet
+        if (currentHole > saveStateObj[0].scores.length) {
+          for (var i=0; i<playerNameArrayLength; i++){
+            saveStateObj[i].scores.push(undefined);
+          }
+
+          //Update server with state
+          // if (online) {
+          //     saveStateToServer('nextHole');
+          // }
+        }
+        //else, just move to the hole that was already "created"
+        displayHoleState(currentHole, saveStateObj);
+    });
+
+    //Set events for skipping holes when clicking Previous Hole
+    $(".previousHole").bind(clickType,
+    function() {
+        if (currentHole == 1) {
+            return;
+        }
+        currentHole--;
+        displayHoleState(currentHole, saveStateObj);
+    });
+
+
+    //*************** MENU PAGE ****************//
+    //Set event to show/hide menu when menu button clicked
+    $(".menuButton").bind(clickType,
+    function() {
+        goToMenu()
+    });
+
+    var goToMenu = function() {
+        if (navigator.userAgent.match(/iPhone/i)) {
+            $(".menuButton").css({
+                "-webkit-border-image": "url(images/back_button.png) 0 8 0 8",
+                "padding-left": "5px",
+                "left": "250px"
+            });
+            $(".menuButton").css({
+                "-moz-border-image": "url(images/back_button.png) 0 8 0 8",
+                "padding-left": "5px",
+                "left": "250px"
+            });
+        }
+        else {
+            $(".menuButton").css({
+                "-webkit-border-image": "url(images/back_button.png) 0 8 0 8",
+                "padding-left": "5px"
+            });
+            $(".menuButton").css({
+                "-moz-border-image": "url(images/back_button.png) 0 8 0 8",
+                "padding-left": "5px"
+            });
+        }
+        //If course page showing, then show menu and hide course page
+        if ($(".menu").is(":hidden")) {
+            $(".menu").show();
+            $("#coursePage").addClass("disappear");
+            $("#coursePage").removeClass("appear");
+            setTimeout(function() {
+                $(".menu").addClass("screenToLeft");
+            });
+            $(".menu").removeClass("screenToRight");
+            //Change menu button to say back
+            $(".menuButton").html("Back");
+            //Populate address field with the last one used
+            if (lastEmailAddress != null) {
+                $(".emailAddress").val(lastEmailAddress);
+            }
+            setTimeout(function() {
+                $("#coursePage").hide();
+                if (navigator.userAgent.match(/iPhone/i)) {
+                    $(".header").css("width", "320px");
+                }
+            },
+            500);
+            $(".joyce").show();
+        }
+
+        //If course page hidden, then hide menu, clear fields, show course page
+        else {
+            $("#coursePage").show();
+            //$(".emailAddress").val("");
+            $(".playerInGame").val("");
+            $(".joyce").hide();
+            setTimeout(function() {
+                $(".menu").addClass("screenToRight");
+                $(".menu").removeClass("screenToLeft");
+                $("#coursePage").addClass("appear");
+                $("#coursePage").removeClass("disappear");
+            });
+            setTimeout(function() {
+                $(".menu").hide();
+                $(".email").hide();
+                $(".addPlayerInGame").hide();
+                $(".howTo").hide();
+                $(".askNewGame").hide();
+            },
+            500);
+            //Change menu button to say menu
+            $(".menuButton").html("Menu");
+            if (navigator.userAgent.match(/iPhone/i)) {
+                $(".menuButton").css({
+                    "-webkit-border-image": "url(images/button.png) 0 8 0 8",
+                    "padding-left": "0px",
+                    "left": "258px"
+                });
+                $(".menuButton").css({
+                    "-moz-border-image": "url(images/button.png) 0 8 0 8",
+                    "padding-left": "0px",
+                    "left": "258px"
+                });
+            }
+            else {
+                $(".menuButton").css({
+                    "-webkit-border-image": "url(images/button.png) 0 8 0 8",
+                    "padding-left": "0px"
+                });
+                $(".menuButton").css({
+                    "-moz-border-image": "url(images/button.png) 0 8 0 8",
+                    "padding-left": "0px"
+                });
+            }
+            if (playerNameArrayLength > 4) {
+                if (navigator.userAgent.match(/iPhone/i)) {
+                    coursePageWidth = playerNameArrayLength * arrowsetWidth;
+                    $(".header").css("width", coursePageWidth);
+                }
+            }
+        }
+    }
+
+
+    //Darken button
+    $(".menuButton, .backButtonFromAddPlayer").mousedown(function() {
+        $(this).css("opacity", "1.0");
+    });
+    $(".menuButton, .backButtonFromAddPlayer").mouseup(function() {
+        $(this).css("opacity", "0.8");
+    });
+    if (navigator.userAgent.match(/iPhone/i)) {
+        $(".menuButton, .backButtonFromAddPlayer").bind("touchstart",
+        function() {
+            $(this).css("opacity", "1.0");
+        });
+        $(".menuButton, .backButtonFromAddPlayer").bind("touchend",
+        function() {
+            $(this).css("opacity", "0.8");
+        });
+    }
+
+    //When click emailHolder, show the email input
+    $(".emailHolder").bind(clickType,
+    function() {
+        $(".email").slideDown(300);
+    });
+
+    //When click submit email, send the email to input address
+    $(".submitEmail").bind("submit", emailScore);
+
+    //When click addPlayerHolder, show add player input
+    $(".addPlayerHolder").bind(clickType,
+    function() {
+        $(".addPlayerInGame").slideDown(300);
+    });
+
+    //Create function that can add a player in game
+    function addPlayerInGameFunction() {
+      playerName = $(".playerInGame").val();
+      if (playerName != "") {
+        playerNameArray.push(playerName);
+      
+        playerNameArrayLength = playerNameArray.length - 1;
+        $("#scoreTotals").append("<div class='scoreBoxTotalHolder'><div class='scoreBoxTotal'>0</div></div>");
+        $("#arrowSetAllPlayers").append("<div class='arrowset'><div class='currentPlayer'>" + playerName + "</div><div class='arrow uparrow'></div><div class='scorebox'>" + defaultScore + "</div><div class='arrow downarrow'></div></div>");
+        
+        //Add player to playerDictionary local storage var
+        if (playerDictionary) {
+          if (playerDictionary[playerName] == undefined) {
+              playerDictionary[playerName] = 1;
+          }
+          else {
+              playerDictionary[playerName]++;
+          }
+        }
+        else {
+          playerDictionary = {};
+          playerDictionary[name] = 1;
+          setFunction("playerDictionary", playerDictionary);
+        }
+        
+        $(".playerInGame").val("");
+        playerNameArrayLength++;
+
+        //Change course page width to allow horizontal scrolling if necessary
+        if (playerNameArrayLength > 4) {
+            coursePageWidth = playerNameArrayLength * arrowsetWidth;
+            $("#coursePage").css("width", coursePageWidth);
+            //If iPhone, change header width to match course page
+            if (navigator.userAgent.match(/iPhone/i)) {
+                $(".header").css("width", coursePageWidth);
+            }
+        }
+
+        //Change text to say player added. Blank out the text box upon clicking it
+        $(".playerInGame").css("color", "gray");
+        $(".playerInGame").val("Player added.");
+
+        $(".playerInGame").focus(function() {
+            $(".playerInGame").val("");
+            $(".playerInGame").css("color", "black");
+            $(".playerInGame").unbind("focus");
+        });
+
+        //Add player to the saveStateObj by creating player's dictionary for the first hole
+        saveStateObj[playerNameArrayLength-1] = {
+            scores: [undefined],
+        }
+        saveStateObj.playerNameArray = playerNameArray;
+        numOfHoles = saveStateObj[0].scores.length;
+
+        //Give new player undefined scores for each hole
+        for (var i = 1; i < numOfHoles; i++) {
+            saveStateObj[playerNameArrayLength-1].scores.push(undefined);
+        }
+
+        //Set saveStateObj local storage var, convert from object to string
+        setFunction("saveStateObj", saveStateObj);
+
+        //Update server and users real time
+        // if (online) {
+        //     saveStateToServer('newPlayer');
+        // }
+      }
+      return false;
+
+    }
+
+    //When click submit add player, add the player to each hole
+    $(".addPlayerSubmitButton").bind("submit", addPlayerInGameFunction);
+   
+    //When click How To holder, show how to steps
+    $(".howToHolder").bind(clickType,
+    function() {
+        $(".howTo").slideDown(300);
+    });
+
+    //When click new game, show the new game option
+    $(".newGame").bind(clickType,
+    function() {
+        $(".askNewGame").slideDown(300);
+    });
+
+    //Create new game by creating new saveStateObj object and reloading page.
+    //On reload, page will look for saveStateObj and not be able to find it, so it will
+    //load the first page (player page) rather than the course page
+    $(".yesButton").bind(clickType,
+    function() {
+        //delete cookie for those who are not online
+        deleteFunction("saveStateObj");
+        //Generate another random url
+        window.location = '/';
+    });
+
+    $(".noButton").bind(clickType,
+    function() {
+        $(".askNewGame").slideUp(300);
+        return false;
+    });
+
+    //Turn on timer for state auto sync
+    //syncTimer();
+}
+
+//Load course page if saveStateObj exists
+if (saveStateObj) {
+    playDG();
+}
+//Load the add players page when no saveStateObj exists
+ else {
+    loadAddPlayerPage();
+}
+
+//Display the course page with the current hole and scores for each player
+function displayHoleState(holeNum, saveStateObj) {
+    playerNameArray = saveStateObj.playerNameArray;
+    playerNameArrayLength = playerNameArray.length;
+    holeNumIndex = holeNum - 1;
+
+    //Update the scores and totals
+    for (var i=0; i<playerNameArrayLength; i++) {
+      playerScore = saveStateObj[i].scores[holeNumIndex];
+      //If score has been recorded, then show it with opacity 1
+      if (playerScore != undefined) {
+        $($('.scorebox')[i]).html(playerScore);
+        $($('.scorebox')[i]).css('opacity', 1);
+      }
+      //Else, show the default score with opacity 0.5
+      else {
+        $($('.scorebox')[i]).html(defaultScore);
+        $($('.scorebox')[i]).css('opacity', 0.5);
+      }
+      $($('.scoreBoxTotal')[i]).html(saveStateObj[i].scores.sum());
+    }
+    
+    $("#holeNumber").html("Hole " + (holeNum));
+};
+
+function loadAddPlayerPage() {    
+    //Create new player when plus button is clicked
+    $("#plusButton").bind("click",
+    function() {
+        $('.player').last().after("<br/>Name <input class='player' type='text' name='player'>");
+    });
+
+
+    //If no players entered before, make dictionary and remove Previous Players div
+    if (playerDictionary == null) {
+        playerDictionary = {};
+        $(".previousPlayers").replaceWith("");
+    }
+    else {
+        //Sort most played players
+        for (player in playerDictionary) {
+            if (!playerDictionary.hasOwnProperty(player)) continue;
+            var thisPlayerArray = [player, playerDictionary[player]];
+            playerArrayMostPlayed.push(thisPlayerArray);
+        }
+        
+        playerArrayMostPlayed.sort(sortDesc);
+        //Set array to contain the top 5 players
+        topPlayersArray = playerArrayMostPlayed.slice(0, 5);
+    }
+
+    //Display the top 5 players
+    $(document).ready(function() {
+        if (window.topPlayersArray) {
+          for (var i = 0; i < topPlayersArray.length; i++) {
+            $(".previousPlayers").append("<div class=previousPlayer>" + topPlayersArray[i][0] + "</div>");
+          }
+        }
+
+        //Populate text box with name when previous player is clicked
+        $(".previousPlayer").bind(clickType,
+        function() {
+            var m = $(".player")
+            for (var i = 0; i < m.length; i++) {
+                if ($(m[i]).val() == "" || $(m[i]).val() == "Enter a name!") {
+                    $($(".player")[i]).val($(this).html());
+                    $($(".player")[i]).css("color", "black");
+                    $($(".player")[i]).unbind("focusin");
+                    break;
+                }
+                if (i == (m.length - 1)) {
+                    $('.player').last().after("<br/>Name <input class='player' type='text' name='player'>");
+                    $($(".player")[m.length]).val($(this).html());
+                }
+            }
+        });
+        //Fade out name that is clicked and disable click function
+        $(".previousPlayer").bind(clickType,
+        function() {
+            $(this).animate({
+                "opacity": "0.5"
+            },
+            150);
+            $(this).unbind(clickType);
+        });
+    });
+
+    submitGame = function() {
+        //If there is at least one player, then add the player(s) to the player array and update the player dictionary
+        $(".player").each(function() {
+            var name = $(this).val();
+            if ((name != "") && (name != "Enter a name!")) {
+                playerNameArray.push(name.replace(/ /g, ""));
+                if (playerDictionary[name] == undefined) {
+                    playerDictionary[name] = 1;
+                }
+                else {
+                    playerDictionary[name]++;
+                }
+            }
+        });
+
+        //If no players entered, alert user and do not continue
+        if (playerNameArray.length == 0) {
+            $($(".player")[0]).css("color", "gray");
+            $($(".player")[0]).val("Enter a name!");
+            $($(".player")[0]).bind("focusin",
+            function() {
+                $($(".player")[0]).val("");
+                $($(".player")[0]).css("color", "black");
+                $($(".player")[0]).unbind("focusin");
+            });
+            return false;
+        }
+
+        //Set dictionary local storage var, convert from object to string
+        setFunction("playerDictionary", playerDictionary);
+
+        //Set default score
+        if ($("#defaulter:checked").length == 1) {
+            defaultScore = 3;
+        }
+
+        //Create a default save state object so you can start storing the state
+        saveStateObj = initializeSaveStateObj(playerNameArray);
+
+        //Update database with new State so no one else can overwrite your game
+        // if (online) {
+        //     saveStateToServer();
+        // }
+        // setTimeout(function() {
+        //     //Tell user what room they're in so others can join
+        //     if (online) {
+        //         alert('You are now at ' + window.location.href + '. Your friends can go to the same URL to see scores update in real time.');
+        //     }
+        //     else {
+        //         alert('If you were online, you would be able to tell your friends to join ' + window.location.href + ' to see real time updates.')
+        //     }
+        // },
+        // 400)
+
+        //Play!
+        playDG();
+        $('#holeNumber').focus();
+    };
+
+    //For IE, allow button to gray on click
+    $(".submitButton").mousedown(function() {
+        $(this).css("background-color", "gray");
+    }).mouseup(function() {
+        $(this).css("background-color", "silver");
+    });
+    
+    //Check if a valid game can start. If so, then save the players dictionary, hide add player page, display first hole, show menu button, and playDG()
+    $(".submitButton").bind(clickType, submitGame);
+
+    
+}
+
+//Function to email scores to input address
+function emailScore() {
+    toAddressArray = [];
+    toAddressArray[0] = $(".emailAddress").val();
+
+    //Create array where first row is names of players, next 18 rows
+    //are scores per hole, 2nd to last row is total score, last row is email array
+    completeScoreArray = [playerNameArray];
+    playerNameArrayLength = playerNameArray.length;
+    numOfHoles = saveStateObj[0].scores.length;
+
+    for (var i = 0; i < numOfHoles+1; i++) {
+        var holeScoreArray = [];
+        for (var j=0; j< playerNameArrayLength; j++) {
+            //If score exists, then add score to hole array
+            if (saveStateObj[j].scores[i] != undefined) {
+              holeScoreArray.push(saveStateObj[j].scores[i]);
+            }
+            //Else the score wasn't actually set, so use a dash placeholder
+            else {
+              holeScoreArray.push('-'); 
+            }
+        }
+        completeScoreArray.push(holeScoreArray);
+    }
+
+    
+    scoreTotalsArray = []
+    for (var i=0; i< playerNameArrayLength; i++) {
+        scoreTotalsArray.push(saveStateObj[i].scores.sum())
+    }
+    
+    completeScoreArray[numOfHoles] = scoreTotalsArray;
+    completeScoreArray[numOfHoles+1] = toAddressArray;
+    
+    setFunction("lastEmailAddress", toAddressArray[0]);
+    //Convert array into string and post
+    completeScoreObj = {
+        jsonn: JSON.stringify(completeScoreArray)
+    };
+    $.post('/email-scores', completeScoreObj);
+    
+    $(".emailAddress").css("color", "gray");
+    $(".emailAddress").val("Scores sent.");
+
+    $(".emailAddress").focus(function() {
+        $(".emailAddress").val("");
+        $(".emailAddress").css("color", "black");
+        $(".emailAddress").unbind("focus");
+    });
+    
+    return false;
+}
+
+//Hide the link to my projects if already on my projects page
+if (window.location != window.parent.location) {
+    $(".joyce").hide();
+}
+
+</script>
+
+ 
+</body> 
+</html> 
+ 
