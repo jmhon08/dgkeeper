@@ -526,7 +526,10 @@ function playDG() {
             $(".menuButton").html("Back");
             //Populate address field with the last one used
             if (lastEmailAddress != null) {
+                lastEmailAddress = getFunction("lastEmailAddress");
                 $(".emailAddress").val(lastEmailAddress);
+                $(".emailAddress").css("color", "black");
+                $(".emailAddress").unbind("focus");
             }
             setTimeout(function() {
                 $("#coursePage").hide();
